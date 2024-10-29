@@ -1,3 +1,5 @@
 # Reference files
 other/
+
+# PyCharm files
 .idea/
