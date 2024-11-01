@@ -3,3 +3,6 @@ other/
 
 # PyCharm files
 .idea/
+
+# Virtual environment
+venv/
