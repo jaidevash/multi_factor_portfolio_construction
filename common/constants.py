@@ -1,1 +1,11 @@
-DB_NAME = 'portfolio.db'
+DB_NAME = 'database.db'
+
+DEFAULT_TICKERS = ['^GSPC', '^FTSE', '^BSESN', '^NSEI', '^MXX', '^N225']
+
+DEFAULT_START_DATE = '2000-01-01'
+DEFAULT_END_DATE = '2024-06-30'
+
+DATE_FORMAT = '%Y-%m'
+
+DEFAULT_PORTFOLIO_ID = 'PF_01'
+DEFAULT_PORTFOLIO_NAME = 'Portfolio_01'
