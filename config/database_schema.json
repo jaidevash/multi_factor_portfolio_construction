@@ -1,0 +1,154 @@
+{
+    "portfolios" : {
+        "columns" : {
+            "portfolio_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : true
+            },
+            "portfolio_name" : {
+                "datatype" : "TEXT",
+                "nullable" : true,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["portfolio_id"]
+    },
+
+    "asset_allocation" : {
+        "columns": {
+            "portfolio_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "asset_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "asset_weight" : {
+                "datatype" : "REAL",
+                "nullable" : false,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["portfolio_id", "asset_id"]
+    },
+
+    "assets" : {
+        "columns": {
+            "asset_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : true
+            },
+            "asset_name" : {
+                "datatype" : "TEXT",
+                "nullable" : true,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["asset_id"]
+    },
+
+    "asset_prices" : {
+        "columns": {
+            "asset_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "date" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "asset_price" : {
+                "datatype" : "REAL",
+                "nullable" : false,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["asset_id", "date"]
+    },
+
+    "returns" : {
+        "columns": {
+            "portfolio_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "date" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "return" : {
+                "datatype" : "REAL",
+                "nullable" : false,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["portfolio_id", "date"]
+    },
+
+    "factors" : {
+        "columns" : {
+            "factor_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "factor_name" : {
+                "datatype" : "TEXT",
+                "nullable" : true,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["factor_id"]
+    },
+
+    "regions" : {
+        "columns" : {
+            "region_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "region_name" : {
+                "datatype" : "TEXT",
+                "nullable" : true,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["region_id"]
+    },
+
+    "factor_data" : {
+        "columns" : {
+            "factor_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "region_id" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "date" : {
+                "datatype" : "TEXT",
+                "nullable" : false,
+                "unique" : false
+            },
+            "value" : {
+                "datatype" : "REAL",
+                "nullable" : false,
+                "unique" : false
+            }
+        },
+        "primary_key" : ["factor_id", "region_id", "date"]
+    }
+}
