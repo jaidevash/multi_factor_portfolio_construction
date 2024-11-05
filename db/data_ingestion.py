@@ -5,6 +5,8 @@ import zipfile
 import pandas as pd
 import logging
 
+from db.setup import DataBase
+
 logging.basicConfig(
     # filename='app.log', # Log to this file
     level=logging.INFO, # Set the logging level format
@@ -49,7 +51,8 @@ def ingest_macroeconomic_data():
 
     selected_indicators = pd.read_csv('config/selected_macroeconomic_indicators.csv')
     c = selected_indicators['Selected for analysis (Y/N)'].eq('Y')
-    selected_indicators = selected_indicators[c]['INDICATOR_CODE'].tolist()
+    selected_indicators = selected_indicators[c]['INDICATOR_CODE'].dropna().tolist()
+    logging.info(f"{len(selected_indicators)} indicators active: {selected_indicators}")
 
     with (sqlite3.connect(f"db/{DB_NAME}") as conn):
 
@@ -83,6 +86,7 @@ def ingest_macroeconomic_data():
                         if 'metadata_indicator' in file.lower():
                             df = pd.read_csv(f)
                             logging.info(f"Loaded {file}")
+                            # logging.info(df.head())
 
                             to_ingest = pd.DataFrame(columns=['factor_id', 'factor_name'])
                             to_ingest['factor_id'] = df['INDICATOR_CODE'].values
@@ -119,10 +123,11 @@ def ingest_macroeconomic_data():
 
                             df = df.drop(columns=[col for col in df.columns if 'unnamed' in col.lower()])
                             df = df.rename(columns={'Country Code' : 'region_id', 'Indicator Code' : 'factor_id'})
-                            selected_indicators = pd.read_sql_query("SELECT DISTINCT factor_id FROM factors", conn)[
+                            loaded_indicators = pd.read_sql_query("SELECT DISTINCT factor_id FROM factor_data", conn)[
                                 'factor_id'].tolist()
-                            c = df['factor_id'].isin(selected_indicators)
-                            df = df[c].reset_index(drop=True)
+                            c1 = df['factor_id'].isin(selected_indicators)
+                            c2 = ~ df['factor_id'].isin(loaded_indicators)
+                            df = df[c1 & c2].reset_index(drop=True)
 
                             id_vars = ['region_id', 'factor_id']
                             value_vars = list(df.columns[4:])
@@ -192,6 +197,7 @@ def ingest_all_data():
 if __name__ == '__main__':
 
     os.chdir("..")
+    DataBase()
     ingest_ticker_data()
     ingest_macroeconomic_data()
     update_portfolio_and_weights()
