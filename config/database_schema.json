@@ -145,7 +145,7 @@
             },
             "value" : {
                 "datatype" : "REAL",
-                "nullable" : false,
+                "nullable" : true,
                 "unique" : false
             }
         },
