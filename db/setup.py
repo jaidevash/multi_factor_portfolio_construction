@@ -5,11 +5,11 @@ import logging
 from typing import Dict, Any
 logging.basicConfig(
     # filename='app.log', # Log to this file
-    level=logging.DEBUG, # Set the logging level format
+    level=logging.INFO, # Set the logging level format
     format='%(asctime)s %(name)s [%(levelname)s]: %(message)s'
 )
 
-from common.constants import DB_NAME
+from common.constants import *
 
 class DataBase:
 
