@@ -10,6 +10,7 @@ os.chdir(PROJ_PATH)
 
 from common.constants import *
 from db.setup import DataBase
+from db.data_ingestion import ingest_all_data
 
 class DashboardHome:
 
@@ -31,6 +32,11 @@ class DashboardHome:
     def if_db_exists(self) -> bool:
         return os.path.isfile(self.db_path)
 
+    @staticmethod
+    def perform_db_init_operations():
+        DataBase()
+        ingest_all_data()
+
     def show_header(self) -> None:
         st.title('Portfolio Evaluation Tool')
         if self.if_db_exists():
@@ -41,10 +47,10 @@ class DashboardHome:
             )
             st.divider()
             st.write('*(alternatively, you can start creating your database again from scratch)*')
-            st.button("Re-create database", type='secondary', on_click=DataBase)
+            st.button("Re-create database", type='secondary', on_click=self.perform_db_init_operations)
         else:
             st.write("#### Seems like you don't have a database yet. Click the button below to set it up.")
-            st.button("Set up database", type='primary', on_click=DataBase)
+            st.button("Set up database", type='primary', on_click=self.perform_db_init_operations)
         st.divider()
 
 
